@@ -10,5 +10,39 @@
         <div id="app">
         </div>
         <script type="module" src="src/main.js"></script>
+
+        <main id="app-container">
+            <section id="search-section">
+                <input type="text" id="city-input" placeholder="Sök stad...">
+                <button id="search-section">Sök</button>
+            </section>
+
+            <section id="current-weather">
+                <h1 id="city-name">Stad</h1>
+                <p id="weather-description">Väderförållande</p>
+                <div id="temp-display">
+                    <span id="temperature">--</span>°C
+                </div>
+                <img id="weather-icon" src="" alt="Väderikon">
+            </section>
+
+            <section id="weather-details">
+                <div class="detail-card">
+                    <span>Luftfuktighet:</span>
+                    <span id="humidity">---</span>%
+                </div>
+                <div class="detail-card">
+                    <span>Vindstyrka:</span>
+                    <span id="wind-speed">---</span> m/s
+                </div>
+            </section>
+
+            <section id="forecast-container">
+                <h2>7-dygnsprognos</h2>
+                <div id="forecast-list">
+                </div>
+            </section>
+        </main>
+
     </body>
 </html>
