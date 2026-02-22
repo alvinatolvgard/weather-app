@@ -33,8 +33,8 @@ Väderappen är en gruppuppgift där vi skapar en webbapplikation med modern des
 
 - HTML5
 - CSS3
-- JavaScript (ES6+)
-- OpenWeatherMap API ??
+- JavaScript
+- Weatherapi
 
 ---
 
@@ -49,7 +49,6 @@ Väderappen är en gruppuppgift där vi skapar en webbapplikation med modern des
 
 ### Planerade funktioner
 - 7-dagars väderprognos
-- Geolocation
 - Favorit-städer
 
 ---
@@ -57,15 +56,14 @@ Väderappen är en gruppuppgift där vi skapar en webbapplikation med modern des
 ## Projektstruktur
 
 ```
-weather-app/
+grupp4-weather-app/
 │
 ├── index.html
 ├── README.md
 ├── .gitignore
 │
 ├── css/
-│   ├── style.css
-│   └── responsive.css
+│   └── style.css
 │
 ├── src/
 │   ├── main.js
@@ -82,50 +80,19 @@ weather-app/
 
 ## Installation
 
-1. Klona repositoryt
-```bash
-git clone [repo-url]
-```
-
-2. Skaffa API-nyckel från OpenWeatherMap
-   - Registrera på https://openweathermap.org/api
-   - Skapa en `config.js` fil i `js/` mappen
-   - Lägg till din API-nyckel
-
-3. Öppna `index.html` i webbläsaren
+Här fyller vi in information om hur projektet kan köras
 
 ---
 
-## Kravspecifikation
-
-### Godkänt (G)
-- Webbsidan byggd med HTML, CSS och JavaScript
-- Korrekt formaterad och indenterad kod
-- Minst tre interaktiva funktioner
-- JavaScript för dynamisk DOM-manipulation
-- Tydlig filstruktur
-- Gemensamt Git-repo med commits från alla gruppmedlemmar
-- README.md med projektbeskrivning
-- Gruppredovisning där alla deltar aktivt
-
-### Väl Godkänt (VG)
-- Hämtar data från externt API
-- Alla funktioner kommenterade
-- Felhantering implementerad
-- Responsiv design (desktop och mobil)
-- Genomtänkt kodstruktur
-
----
-
-## Git Workflow
+## Arbetsflöde
 
 ### Branch-strategi
 ```
 main
   └── develop
-        ├── feature/[funktionsnamn]
-        ├── docs/[dokumentation]
-        └── style/[design]
+        ├── feature/[funktionsnamn]- [ditt namn]
+        ├── docs/[dokumentation]- [ditt namn]
+        └── style/[design]- [ditt namn]
 ```
 
 ### Commit-konventioner
@@ -137,13 +104,54 @@ Style: CSS och design
 Docs: Dokumentation
 ```
 
----
+#### 1. Hämta senaste ändringar
+```bash
+git checkout main
+git pull origin main
+```
 
-## Status
+#### 2. Skapa ny branch med ditt namn
+```bash
+git checkout -b feature/din-funktion-[ditt namn]
+```
 
-**Projektstart:** [Datum]  
-**Planerat slut:** [Datum]  
-**Nuvarande fas:** Setup och planering
+#### 3. Jobba med din kod
+Gör dina ändringar i VS Code
+
+#### 4. Commit med ditt namn
+```bash
+git add .
+git commit -m "Add: beskrivning - [ditt namn]"
+```
+
+#### 5. Pusha till GitHub
+```bash
+git push origin feature/din-funktion-[ditt namn]
+```
+
+#### 6. Skapa Pull Request
+- Gå till GitHub
+- Klicka på "Compare & pull request"
+- Fyll i beskrivning av vad du gjort
+
+#### 7. Be om Review i Discord
+Skriv i `#frågor-och-funderingar`:
+```
+🔄 Pull Request klar för review!
+Branch: feature/din-funktion-[ditt namn]
+Beskrivning: [Kort beskrivning]
+```
+
+#### 8. Code Review & Merge
+- (Sanel kollar med William angående upplägg för pull requests/merge)
+- Vänta på godkännande innan merge
+- När godkänd: Merge och delete branch
+
+#### 9. Uppdatera lokal main
+```bash
+git checkout main
+git pull origin main
+```
 
 ---
 
