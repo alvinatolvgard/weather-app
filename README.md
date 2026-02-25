@@ -84,15 +84,9 @@ Här fyller vi in information om hur projektet kan köras
 
 ---
 
-## Arbetsflöde
+## Git Workflow
 
-### Branch-strategi
-```
-main
-├── [funktionsnamn]- [ditt namn]
-├── [dokumentation]- [ditt namn]
-└── [design]- [ditt namn]
-```
+### Arbetsflöde
 
 #### 1. Hämta senaste ändringar
 ```bash
@@ -100,23 +94,30 @@ git checkout main
 git pull origin main
 ```
 
-#### 2. Skapa ny branch med ditt namn
+#### 2. Skapa ny branch
 ```bash
-git checkout -b feature/-[ditt namn]
+git checkout -b funktionsnamn
+```
+
+**Exempel:**
+```bash
+git checkout -b 7-day-forecast
+git checkout -b search-functionality
+git checkout -b dark-mode
 ```
 
 #### 3. Jobba med din kod
 Gör dina ändringar i VS Code
 
-#### 4. Commit med ditt namn
+#### 4. Commit med ditt namn i slutet
 ```bash
 git add .
-git commit -m "Add: beskrivning - [ditt namn]"
+git commit -m "Beskrivning av ändring - Ditt Namn"
 ```
 
 #### 5. Pusha till GitHub
 ```bash
-git push origin feature/din-funktion-[ditt namn]
+git push origin funktionsnamn
 ```
 
 #### 6. Skapa Pull Request
@@ -125,16 +126,16 @@ git push origin feature/din-funktion-[ditt namn]
 - Fyll i beskrivning av vad du gjort
 
 #### 7. Be om Review i Discord
-Skriv i `#frågor-och-funderingar`:
+Skriv i Discord:
 ```
-🔄 Pull Request klar för review!
-Branch: feature/din-funktion-[ditt namn]
-[Kort beskrivning]
+🔄 Pull Request klar!
+Branch: funktionsnamn
+[Kort beskrivning av vad du gjort]
 ```
 
 #### 8. Code Review & Merge
-- Vänta på godkännande innan merge
-- När godkänd: Merge och delete branch
+- Vänta på godkännande från minst en gruppmedlem
+- När du fått review: Merge och delete branch på GitHub
 
 #### 9. Uppdatera lokal main
 ```bash
