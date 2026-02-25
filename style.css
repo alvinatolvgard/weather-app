@@ -563,3 +563,8 @@ select:focus {
   border-color: var(--color-accent);
   outline: none;
 }
+
+/* Sanel, detta är för att errorMessage ska fungera */
+.hidden {
+  display: none;
+}
