@@ -1,10 +1,20 @@
+
 console.log("Systemet är redo och filerna är kopplade!");
 // console.log behöver ligga efter import, kan jag flytta på den eller är det bättre om Sanel flyttar den?
 import { getWeatherForecast } from "./api.js";
 import { renderWeeklyForecast } from "./ui.js";
+import { handleSearch } from "./utils.js";
 
 // Vilken default stad ska vi visa när sidan laddas?
 const DEFAULT_CITY = "Gothenburg";
+
+// Lyssna på Enter-knapptryck - Alvina
+document.querySelector(".search-bar").addEventListener("keydown", async(event) => {
+    if (event.key === "Enter") {
+        await handleSearch();
+    }
+});
+
 
 /**
  * Hämtar väderdata för en stad och uppdaterar sidan
@@ -28,3 +38,6 @@ async function loadWeather(city) {
 
 // Kör funktionen direkt när sidan laddas
 loadWeather(DEFAULT_CITY);
+
+
+
