@@ -38,6 +38,3 @@ async function loadWeather(city) {
 
 // Kör funktionen direkt när sidan laddas
 loadWeather(DEFAULT_CITY);
-
-
-
