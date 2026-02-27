@@ -15,11 +15,11 @@ export function renderWeeklyForecast(forecastDays) {
     forecastDays.forEach((dayData) => {
         // Plocka ut datan vi behöver ur varje dagopbekt
         const date = new Date(dayData.date);
-        const dayName = date.toLocaleDateString("sv-SE", { weekday: "long" });
-        const dateStr = date.toLocaleDateString("sv-SE", { day: "numeric", month: "short" });
+        const dayName = date.toLocaleDateString("en-US", { weekday: "long" });
+        const dateStr = date.toLocaleDateString("en-US", { day: "numeric", month: "short" });
         const maxTemp = Math.round(dayData.day.maxtemp_c);
         const minTemp = Math.round(dayData.day.mintemp_c);
-        const rainChance = dayData.day.daily_chance_of_rain;
+        const precipitation = dayData.day.totalprecip_mm;
         const iconUrl = "https:" + dayData.day.condition.icon;
         const conditionText = dayData.day.condition.text;
 
@@ -33,7 +33,7 @@ export function renderWeeklyForecast(forecastDays) {
             <span class="day-date">${dateStr}</span>
             <img src="${iconUrl}" alt="${conditionText}" class="weather-icon-small" />
             <div class="day-temps">
-              <span class="precip-percent">${rainChance}%</span>
+              <span class="precip-mm">${precipitation} mm</span>
               <span class="temp-max">${maxTemp}°</span>
               <span class="temp-min">${minTemp}°</span>
             </div>
