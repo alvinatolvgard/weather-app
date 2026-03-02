@@ -4,6 +4,7 @@ console.log("Systemet är redo och filerna är kopplade!");
 import { getWeatherForecast } from "./api.js";
 import { renderWeeklyForecast } from "./ui.js";
 import { handleSearch } from "./utils.js";
+import { displayCurrentDate } from "./utils.js";
 
 // Vilken default stad ska vi visa när sidan laddas?
 const DEFAULT_CITY = "Gothenburg";
@@ -14,6 +15,9 @@ document.querySelector(".search-bar").addEventListener("keydown", async(event) =
         await handleSearch();
     }
 });
+
+// Visar aktuellt datum i headern - Alvina
+displayCurrentDate();
 
 
 /**

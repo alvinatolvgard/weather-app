@@ -10,8 +10,16 @@ export async function handleSearch() {
     document.querySelector(".card-location").textContent = city;
 }
 
-const now = new Date();
-const dateName = now.toLocaleDateString("en-US", {weekday: "long"});
-const date = now.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric"});
+/**
+* Visar det aktuella datumet i headern
+* @author Alvina
+* @returns {void} - Retunerar inget värde, uppdaterar bara DOM:en
+*/
+export function displayCurrentDate() {
+    const now = new Date();
+    const dateName = now.toLocaleDateString("en-US", { weekday: "long" });
+    const date = now.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" });
 
-document.querySelector(".date").textContent = `${dateName}, ${date}`;
+    document.querySelector(".date").textContent = `${dateName}, ${date}`;
+}
+
