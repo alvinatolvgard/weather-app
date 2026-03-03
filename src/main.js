@@ -1,4 +1,3 @@
-
 import { getWeatherForecast, getWeatherByCoords } from "./api.js";
 import {
   renderWeeklyForecast,
@@ -10,10 +9,10 @@ import { handleSearch } from "./utils.js";
 import { displayCurrentDate } from "./ui.js";
 import { showError, clearError } from "./ui.js";
 
-
-
-// Vilken default stad ska vi visa när sidan laddas?
 const DEFAULT_CITY = "Gothenburg";
+
+// Håller koll på om geolocation redan jobbar - Maryam
+let geolocationStarted = false;
 
 // Lyssna på Enter-knapptryck - Alvina
 document
@@ -92,30 +91,43 @@ function loadWeatherByLocation() {
         return;
     }
 
+    geolocationStarted = true;
+
     // Frågar användaren om tillstånd att använda platsen
     navigator.geolocation.getCurrentPosition(
         // Om användaren godkänner
         async (position) => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            const weatherData = await getWeatherByCoords(lat, lon);
+            try {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                const weatherData = await getWeatherByCoords(lat, lon);
 
-            const currentWeather = weatherData.current;
-            const location = weatherData.location;
-            const forecastDays = weatherData.forecast.forecastday;
-            const todayForecast = forecastDays[0];
+                const currentWeather = weatherData.current;
+                const location = weatherData.location;
+                const forecastDays = weatherData.forecast.forecastday;
+                const todayForecast = forecastDays[0];
 
-            renderCurrentWeather(currentWeather, location);
-            renderAirQuality(currentWeather.air_quality);
-            renderWeatherDetails(currentWeather, todayForecast);
-            renderWeeklyForecast(forecastDays);
+                renderCurrentWeather(currentWeather, location);
+                renderAirQuality(currentWeather.air_quality);
+                renderWeatherDetails(currentWeather, todayForecast);
+                renderWeeklyForecast(forecastDays);
+            } catch (error) {
+                console.error("Could not get location", error);
+                loadWeather(DEFAULT_CITY); // Faller tillbaka på default om något går fel
+            }      
         },
-        // Om användaren nekar eller nåt går fel
+        // Om användaren nekar eller något går fel med geolocation
         (error) => {
             console.error("Could not get location", error);
-            loadWeather(DEFAULT_CITY); // Visar i så fall defaultstaden
+            loadWeather(DEFAULT_CITY);
         }
     );
 }
 
+// Skriver över med användarens plats när geolocation svarar
 loadWeatherByLocation();
+
+// Kör bara default om geolocation inte startade
+if (!geolocationStarted) {
+    loadWeather(DEFAULT_CITY);
+}
