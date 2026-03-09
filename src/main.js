@@ -4,14 +4,15 @@ import {
   renderCurrentWeather,
   renderAirQuality,
   renderWeatherDetails,
+  displayCurrentDate,
+  showError,
+  clearError,
+  renderHourlyForecast,
 } from "./ui.js";
 import { handleSearch } from "./utils.js";
-import { displayCurrentDate } from "./ui.js";
-import { showError, clearError } from "./ui.js";
 import { getFavorites, saveFavorite, removeFavorite } from "/src/storage.js";
 
 let currentActiveCity = "";
-
 
 const DEFAULT_CITY = "Gothenburg";
 
@@ -34,14 +35,13 @@ document
 // Visar aktuellt datum i headern - Alvina
 displayCurrentDate();
 
-
 const searchBtn = document.getElementById("search-btn");
 const cityInput = document.getElementById("city-input");
 
 /**
  *  Lyssna på klick på förstoringsglaset
  * @author Sanel
-*/
+ */
 document.getElementById("search-btn").addEventListener("click", async () => {
   const city = document.getElementById("city-input").value;
   if (city) {
@@ -60,21 +60,22 @@ async function loadWeather(city) {
   try {
     const weatherData = await getWeatherForecast(city);
 
-    // Extrahera all data vi behöver
     const currentWeather = weatherData.current;
     const location = weatherData.location;
     currentActiveCity = location.name; // Sanel
     const forecastDays = weatherData.forecast.forecastday;
     const todayForecast = forecastDays[0];
+    const hourlyData = todayForecast.hour; // Timdata för idag
 
     // Uppdatera alla delar av UI:t
-    renderCurrentWeather(currentWeather, location); // Ivana
-    renderAirQuality(currentWeather.air_quality); // Ivana
-    renderWeatherDetails(currentWeather, todayForecast); // Ivana
-    renderWeeklyForecast(forecastDays); // Maryam
+    renderCurrentWeather(currentWeather, location);
+    renderAirQuality(currentWeather.air_quality);
+    renderWeatherDetails(currentWeather, todayForecast);
+    renderWeeklyForecast(forecastDays);
+    renderHourlyForecast(hourlyData); // <-- NY!
     updateStarState(currentActiveCity); // Sanel
 
-    // Uppdatera datum i headern
+    // Uppdatera datum
     const date = new Date(location.localtime);
     document.querySelector(".date").textContent = date.toLocaleDateString(
       "en-US",
@@ -87,17 +88,30 @@ async function loadWeather(city) {
     );
   } catch (error) {
     console.error("Error fetching weather data:", error);
-    // Visa felmeddelande för användaren
     alert("Could not fetch weather data. Please try again later.");
   }
 }
-
 /**
  * Hämtar användarens position och laddar vädret för den platsen
  * @author Maryam
  * @returns {void}
  */
-function loadWeatherByLocation() {
+    async function loadWeatherByLocation() {
+        // Rensar hårdkodade värden medan plats och väderdata hämtas - Alvina
+    document.querySelector(".temperature").textContent = "-";
+    document.querySelector(".card-location").textContent = "Fetching location...";
+    document.querySelector(".header-left span").textContent = "Fetching location...";
+    document.querySelector(".feels-like").textContent = "-";
+    document.querySelector(".condition").textContent = "-";
+    document.querySelector(".condition-detail").textContent = "-";
+    document.querySelectorAll(".hour").forEach(el => el.textContent = "-");
+    document.querySelectorAll(".temp").forEach(el => el.textContent = "-");
+    document.querySelectorAll(".precip").forEach(el => el.textContent = "-");
+    document.querySelector(".aq-value").textContent = "-";
+    document.querySelector(".aq-label").textContent = "-";
+    document.querySelectorAll(".aq-metric-value").forEach(el => el.textContent = "-");
+    document.querySelectorAll(".card-value").forEach(el => el.textContent = "-");
+
     // Kontrollerar först att webbläsaren stödjer geolocation
     if (!navigator.geolocation) {
         console.error("Browser does not support geolocation");
@@ -105,39 +119,39 @@ function loadWeatherByLocation() {
         return;
     }
 
-    geolocationStarted = true;
+  geolocationStarted = true;
 
-    // Frågar användaren om tillstånd att använda platsen
-    navigator.geolocation.getCurrentPosition(
-        // Om användaren godkänner
-        async (position) => {
-            try {
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
-                const weatherData = await getWeatherByCoords(lat, lon);
+  // Frågar användaren om tillstånd att använda platsen
+  navigator.geolocation.getCurrentPosition(
+    // Om användaren godkänner
+    async (position) => {
+      try {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        const weatherData = await getWeatherByCoords(lat, lon);
 
-                const currentWeather = weatherData.current;
-                const location = weatherData.location;
-                currentActiveCity = location.name; // Sanel
-                updateStarState(currentActiveCity); // Sanel
-                const forecastDays = weatherData.forecast.forecastday;
-                const todayForecast = forecastDays[0];
+        const currentWeather = weatherData.current;
+        const location = weatherData.location;
+        currentActiveCity = location.name; // Sanel
+        updateStarState(currentActiveCity); // Sanel
+        const forecastDays = weatherData.forecast.forecastday;
+        const todayForecast = forecastDays[0];
 
-                renderCurrentWeather(currentWeather, location);
-                renderAirQuality(currentWeather.air_quality);
-                renderWeatherDetails(currentWeather, todayForecast);
-                renderWeeklyForecast(forecastDays);
-            } catch (error) {
-                console.error("Could not get location", error);
-                loadWeather(DEFAULT_CITY); // Faller tillbaka på default om något går fel
-            }      
-        },
-        // Om användaren nekar eller något går fel med geolocation
-        (error) => {
-            console.error("Could not get location", error);
-            loadWeather(DEFAULT_CITY);
-        }
-    );
+        renderCurrentWeather(currentWeather, location);
+        renderAirQuality(currentWeather.air_quality);
+        renderWeatherDetails(currentWeather, todayForecast);
+        renderWeeklyForecast(forecastDays);
+      } catch (error) {
+        console.error("Could not get location", error);
+        loadWeather(DEFAULT_CITY); // Faller tillbaka på default om något går fel
+      }
+    },
+    // Om användaren nekar eller något går fel med geolocation
+    (error) => {
+      console.error("Could not get location", error);
+      loadWeather(DEFAULT_CITY);
+    },
+  );
 }
 
 // Skriver över med användarens plats när geolocation svarar
@@ -145,7 +159,7 @@ loadWeatherByLocation();
 
 // Kör bara default om geolocation inte startade
 if (!geolocationStarted) {
-    loadWeather(DEFAULT_CITY);
+  loadWeather(DEFAULT_CITY);
 }
 
 /**
@@ -153,7 +167,7 @@ if (!geolocationStarted) {
  * @author Sanel
  */
 function updateStarState(city) {
-  const favStar = document.getElementById('fav-star');
+  const favStar = document.getElementById("fav-star");
   if (!favStar) return;
 
   const favorites = getFavorites();

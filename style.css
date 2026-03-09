@@ -331,15 +331,14 @@ body {
   margin-bottom: var(--space-4);
 }
 
-.hourly-forecast { 
+.hourly-forecast {
   display: flex;
   gap: var(--space-3);
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
-  
-  /* Döljer scrollbar i chrome/safari - men den fungerar ändå */
   -webkit-overflow-scrolling: touch;
+  mask-image: linear-gradient(to right, black 95%, transparent);
 }
 
 .hourly-forecast::-webkit-scrollbar {
@@ -352,11 +351,10 @@ body {
   align-items: center;
   gap: var(--space-2);
   min-width: 70px;
-  padding: var(--space-3);
+  padding: var(--space-3) var(--space-3) var(--space-3) 0;
   border-radius: var(--radius-md);
 }
 
-/* lägg till en border på hover likt 7-day forecast !! */
 .hourly-item:hover {
   background: rgba(20, 30, 48, 0.8);
   border-color: var(--color-border-hover);
@@ -364,7 +362,7 @@ body {
 }
 
 .hourly-item .hour {
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-md);
   color: var(--color-text-muted);
 }
 
@@ -441,8 +439,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   gap: var(--space-2);
-  width: 110px;
+  min-width: 130px;
+  min-height: 250px;
   padding: var(--space-3);
   background: rgba(20, 30, 48, 0.6);
   border-radius: var(--radius-md);
@@ -509,6 +509,10 @@ body {
   .weather-details-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .forecast-list {
+    mask-image: linear-gradient(to right, black 95%, transparent);
+  }
 }
 
 @media (max-width: 768px) {
@@ -526,17 +530,18 @@ body {
 
   .hourly-forecast {
     scroll-behavior: smooth;
-    padding: var(--space-4);
+    padding: var(--space-3) var(--space-3) var(--space-3) 0;
   }
 
   .forecast-day {
     flex-wrap: wrap;
+    min-width: 110px;
   }
 
   .day-temps {
     margin-left: 0;
     width: 100%;
-    justify-content: flex-end;
+    justify-content: center;
   }
 
   .temperature {
@@ -624,7 +629,9 @@ select:focus {
   cursor: pointer;
   font-size: 1.6rem;
   color: #cbd5e0;
-  transition: transform 0.2s ease, color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
   margin-left: auto;
 }
 
@@ -637,4 +644,3 @@ select:focus {
 #fav-star.fa-solid {
   color: #f1c40f;
 }
-
