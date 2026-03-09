@@ -85,7 +85,9 @@ async function loadWeather(city) {
  * @author Maryam
  * @returns {void}
  */
-function loadWeatherByLocation() {
+    async function loadWeatherByLocation() {
+    document.querySelector(".temperature").textContent = "...";
+    document.querySelector(".card-location").textContent = "Fetching location...";
     // Kontrollerar först att webbläsaren stödjer geolocation
     if (!navigator.geolocation) {
         console.error("Browser does not support geolocation");
