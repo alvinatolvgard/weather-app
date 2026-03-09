@@ -4,12 +4,14 @@ import {
   renderCurrentWeather,
   renderAirQuality,
   renderWeatherDetails,
+  displayCurrentDate,
+  showError,
+  clearError,
   renderHourlyForecast,
 } from "./ui.js";
 import { handleSearch } from "./utils.js";
-import { displayCurrentDate } from "./ui.js";
-import { showError, clearError } from "./ui.js";
 import { getFavorites, saveFavorite, removeFavorite } from "/src/storage.js";
+
 
 const DEFAULT_CITY = "Gothenburg";
 

@@ -41,8 +41,6 @@ export function clearError() {
  * @returns {void} - Returnerar inget värde, uppdaterar bara DOM:en
  */
 export function renderWeeklyForecast(forecastDays) {
-  console.log(forecastDays.length); // debugging - visar bara 3 dagar
-  console.log(forecastDays); // debugging
   // Hitta elementet i HTML där datan ska läggas in
   const forecastList = document.querySelector(".forecast-list");
 

@@ -356,7 +356,6 @@ body {
   border-radius: var(--radius-md);
 }
 
-/* lägg till en border på hover likt 7-day forecast !! */
 .hourly-item:hover {
   background: rgba(20, 30, 48, 0.8);
   border-color: var(--color-border-hover);
@@ -441,8 +440,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   gap: var(--space-2);
-  width: 110px;
+  min-width: 130px;
+  min-height: 250px;
   padding: var(--space-3);
   background: rgba(20, 30, 48, 0.6);
   border-radius: var(--radius-md);
@@ -531,12 +532,13 @@ body {
 
   .forecast-day {
     flex-wrap: wrap;
+    min-width: 110px;
   }
 
   .day-temps {
     margin-left: 0;
     width: 100%;
-    justify-content: flex-end;
+    justify-content: center;
   }
 
   .temperature {
