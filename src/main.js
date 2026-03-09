@@ -87,6 +87,7 @@ async function loadWeather(city) {
  * @returns {void}
  */
     async function loadWeatherByLocation() {
+        // Rensar hårdkodade värden medan plats och väderdata hämtas - Alvina
     document.querySelector(".temperature").textContent = "-";
     document.querySelector(".card-location").textContent = "Fetching location...";
     document.querySelector(".header-left span").textContent = "Fetching location...";
