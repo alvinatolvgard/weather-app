@@ -17,6 +17,8 @@ const DEFAULT_CITY = "Gothenburg";
 // Håller koll på om geolocation redan jobbar - Maryam
 let geolocationStarted = false;
 
+let currentActiveCity = ""; // Sanel
+
 // Lyssna på Enter-knapptryck - Alvina
 document
   .querySelector(".search-bar")
