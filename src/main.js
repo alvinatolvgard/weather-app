@@ -10,7 +10,7 @@ import {
   renderHourlyForecast,
 } from "./ui.js";
 import { handleSearch } from "./utils.js";
-import { getFavorites, saveFavorite, removeFavorite } from "/src/storage.js";
+import { getFavorites, saveFavorite, removeFavorite, getRecentSearches, saveRecentSearch } from "./storage.js"; // Lagt till get och save - Albrim
 
 const DEFAULT_CITY = "Gothenburg";
 
@@ -28,6 +28,7 @@ document
       if (city) {
         await loadWeather(city);
         event.target.value = "";
+        document.getElementById("search-dropdown").classList.add("hidden"); // Albrim
       }
     }
   });
@@ -37,6 +38,7 @@ displayCurrentDate();
 
 const searchBtn = document.getElementById("search-btn");
 const cityInput = document.getElementById("city-input");
+const dropdown = document.getElementById("search-dropdown"); // Albrim
 
 /**
  *  Lyssna på klick på förstoringsglaset
@@ -59,6 +61,8 @@ document.getElementById("search-btn").addEventListener("click", async () => {
 async function loadWeather(city) {
   try {
     const weatherData = await getWeatherForecast(city);
+
+    saveRecentSearch(city); // Albrim
 
     const currentWeather = weatherData.current;
     const location = weatherData.location;
@@ -137,6 +141,7 @@ async function loadWeatherByLocation() {
 
         const currentWeather = weatherData.current;
         const location = weatherData.location;
+        saveRecentSearch(location.name); // Albrim
         currentActiveCity = location.name; // Sanel
         updateStarState(currentActiveCity); // Sanel
         const forecastDays = weatherData.forecast.forecastday;
@@ -204,3 +209,80 @@ document.addEventListener("click", (event) => {
     updateStarState(currentActiveCity);
   }
 });
+
+/** Här börjar Albrims kod */
+
+const cityInputEl = document.getElementById("city-input");
+const dropdownEl = document.getElementById("search-dropdown");
+
+function updateDropdown() {
+  const recentList = document.getElementById("recent-list");
+  const favList = document.getElementById("favorites-list");
+  const favSection = document.getElementById("favorites-section");
+  const recentSection = document.getElementById("recent-section");
+
+  const favorites = getFavorites();
+  const recents = getRecentSearches();
+
+  recentList.innerHTML = "";
+  favList.innerHTML = "";
+
+  // Favoriter - Nu utan hjärt-ikonen!
+  if (favorites.length === 0) {
+    favSection.style.display = "none";
+  } else {
+    favSection.style.display = "block";
+    favorites.forEach(city => {
+      const li = document.createElement("li");
+      li.innerHTML = `${city}`;
+      li.onclick = () => {
+        loadWeather(city);
+        dropdownEl.classList.add("hidden");
+      };
+      favList.appendChild(li);
+    });
+  }
+
+  // Senast sökta
+  if (recents.length === 0) {
+    recentSection.style.display = "none";
+  } else {
+    recentSection.style.display = "block";
+    recents.forEach(city => {
+      const li = document.createElement("li");
+      li.innerHTML = `${city}`;
+      li.onclick = () => {
+        loadWeather(city);
+        dropdownEl.classList.add("hidden");
+      };
+      recentList.appendChild(li);
+    });
+  }
+}
+
+// 2. Fixa Enter-knappen och klick-fokus
+if (cityInputEl) {
+  // Visa dropdown när man klickar i rutan
+  cityInputEl.addEventListener("focus", () => {
+    updateDropdown();
+    dropdownEl.classList.remove("hidden");
+  });
+
+  // Stäng dropdown när man trycker Enter
+  cityInputEl.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      dropdownEl.classList.add("hidden");
+    }
+  });
+}
+
+// Stäng om man klickar utanför rutan
+document.addEventListener("click", (e) => {
+  if (cityInputEl && dropdownEl) {
+    if (!cityInputEl.contains(e.target) && !dropdownEl.contains(e.target)) {
+      dropdownEl.classList.add("hidden");
+    }
+  }
+});
+
+/** Här slutar Albrims Kod */

@@ -35,3 +35,34 @@ export function removeFavorite(city) {
     localStorage.setItem('weatherFavorites', JSON.stringify(favorites));
 }
 
+/* Här börjar Albrims kod */
+
+/**
+Hämtar listan med senaste sökta städer.
+@author Albrim
+@returns {Array} En array med namnen på de senaste sökta städerna.*/
+export function getRecentSearches() {
+    const recents = localStorage.getItem('recentSearches');
+    return recents ? JSON.parse(recents) : [];
+}
+/**
+ 
+Sparar en stad i listan över senaste sökningar.
+@author Albrim
+@param {string} city - Namnet på staden som ska sparas.*/
+export function saveRecentSearch(city) {
+    let recents = getRecentSearches();
+
+    // Ta bort staden om den redan finns.
+    recents = recents.filter(item => item.toLowerCase() !== city.toLowerCase());
+
+    // Lägg till staden först i listan.
+    recents.unshift(city);
+
+    // Spara bara de senaste sökningarna.
+    if (recents.length > 5) {
+        recents = recents.slice(0, 5);
+    }
+
+    localStorage.setItem('recentSearches', JSON.stringify(recents));
+}
