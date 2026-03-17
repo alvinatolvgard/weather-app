@@ -21,14 +21,14 @@ export async function getWeatherForecast(city) {
  * @returns {Promise<Object>} - Objekt med väderdata
  */
 export async function getWeatherByCoords(lat, lon) {
-    const url = `https://api.weatherapi.com/v1/forecast.json?key=${CONFIG.API_KEY}&q=${lat},${lon}&days=7&aqi=yes`;
+  const url = `https://api.weatherapi.com/v1/forecast.json?key=${CONFIG.API_KEY}&q=${lat},${lon}&days=7&aqi=yes`;
 
-    const response = await fetch(url);
+  const response = await fetch(url);
 
-    if (!response.ok) {
-        throw new Error("Couldn't get weatherdata");
-    }
+  if (!response.ok) {
+    throw new Error("Couldn't get weatherdata");
+  }
 
-    const data = await response.json();
-    return data;
+  const data = await response.json();
+  return data;
 }

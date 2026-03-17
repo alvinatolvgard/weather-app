@@ -5,11 +5,8 @@ import {
   renderAirQuality,
   renderWeatherDetails,
   displayCurrentDate,
-  showError,
-  clearError,
   renderHourlyForecast,
 } from "./ui.js";
-import { handleSearch } from "./utils.js";
 import { getFavorites, saveFavorite, removeFavorite, getRecentSearches, saveRecentSearch } from "./storage.js"; // Lagt till get och save - Albrim
 
 const DEFAULT_CITY = "Gothenburg";

@@ -19,9 +19,9 @@ export function saveFavorite(city) {
     // Kontroll så det inte blir samma stad två gånger.
     if (!favorites.includes(city)) {
         favorites.push(city);
-            localStorage.setItem('weatherFavorites', JSON.stringify(favorites));
-        }
+        localStorage.setItem('weatherFavorites', JSON.stringify(favorites));
     }
+}
 
 /**
  * Tar bort stad från favoriter i lokala lagringen.
