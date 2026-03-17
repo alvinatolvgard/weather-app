@@ -33,10 +33,6 @@ document
 // Visar aktuellt datum i headern - Alvina
 displayCurrentDate();
 
-const searchBtn = document.getElementById("search-btn");
-const cityInput = document.getElementById("city-input");
-const dropdown = document.getElementById("search-dropdown"); // Albrim
-
 /**
  *  Lyssna på klick på förstoringsglaset
  * @author Sanel
