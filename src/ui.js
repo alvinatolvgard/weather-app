@@ -200,18 +200,24 @@ export function renderAirQuality(airQuality) {
   aqiLabel.textContent = labelText;
   aqiLabel.className = `aq-label ${colorClass}`;
 
-  // Uppdatera metrics
+  // Uppdatera luftkvalitetsmetrikvärden (PM2.5, PM10, O3, NO2) i UI:t
   const metrics = document.querySelectorAll(".aq-metric");
+
+  // Kontrollera att vi har minst 4 metrik-element innan vi försöker uppdatera dem
   if (metrics.length >= 4) {
+    // PM2.5 --> Partiklar med diameter mindre än 2.5 mikrometer. Dessa är de mest skadliga partiklarna eftersom de kan tränga djupt in i lungorna och till och med komma in i blodomloppet.
     metrics[0].querySelector(".aq-metric-value").textContent = Math.round(
       airQuality.pm2_5 || 0,
     );
+    // PM10 --> Partiklar med diameter mindre än 10 mikrometer. Dessa partiklar kan också vara skadliga, särskilt för personer med andningsproblem.
     metrics[1].querySelector(".aq-metric-value").textContent = Math.round(
       airQuality.pm10 || 0,
     );
+    // O3 (ozon) --> En gas som kan vara skadlig för lungorna, särskilt under varma dagar när den bildas i högre koncentrationer.
     metrics[2].querySelector(".aq-metric-value").textContent = Math.round(
       airQuality.o3 || 0,
     );
+    // NO2 (kvävedioxid) --> En gas som bildas när solljus reagerar med utsläpp från bilar och industrier. Kan irritera luftvägarna och förvärra astma och andra andningsproblem.
     metrics[3].querySelector(".aq-metric-value").textContent = Math.round(
       airQuality.no2 || 0,
     );
