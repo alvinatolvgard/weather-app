@@ -32,11 +32,19 @@ Weather App är en webbapplikation byggd i JavaScript som hämtar och visar väd
 
 ---
 
+## Design
+
+Innan utvecklingen av projektet påbörjades skapades designen med wireframes i Figma.
+
+🔗 [Visa wireframes i Figma](https://www.figma.com/design/OsdkxBJKoQKGDU7qebrgGD/V%C3%A4derappen?node-id=0-1&t=p7KEh1Su6JfjLVgA-1)
+
+---
+
 ## Funktioner
 
 ### Aktuellt väder
 - Geolocation - Visar automatiskt vädret för din nuvarande plats (om du godkänner)
-- Sökfunktion med historik över de 4 senaste sökningarna
+- Sökfunktion med historik över de 5 senaste sökningarna
 - Favoritstäder - Spara städer med stjärnikonen, sparas lokalt i webbläsaren
 - Aktuell temperatur, känns-som-temperatur och väderbeskrivning
 
