@@ -227,7 +227,7 @@ function updateDropdown() {
     favSection.style.display = "block";
     favorites.forEach(city => {
       const li = document.createElement("li");
-      li.innerHTML = `${city}`;
+      li.textContent = city;
       li.onclick = () => {
         loadWeather(city);
         dropdownEl.classList.add("hidden");
@@ -243,7 +243,7 @@ function updateDropdown() {
     recentSection.style.display = "block";
     recents.forEach(city => {
       const li = document.createElement("li");
-      li.innerHTML = `${city}`;
+      li.textContent = city;
       li.onclick = () => {
         loadWeather(city);
         dropdownEl.classList.add("hidden");
