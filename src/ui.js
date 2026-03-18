@@ -66,17 +66,41 @@ export function renderWeeklyForecast(forecastDays) {
     const dayElement = document.createElement("div");
     dayElement.classList.add("forecast-day");
 
-    // Fyller HTML-elementet med innehåll (samma struktur som HTML-filen)
-    dayElement.innerHTML = `
-            <span class="day-name">${dayName}</span>
-            <span class="day-date">${dateStr}</span>
-            <i class="${iconClass}"></i>
-            <div class="day-temps">
-              <span class="temp-max">${maxTemp}°</span>
-              <span class="temp-min">${minTemp}°</span>
-            </div>
-            <span class="precip-mm">${precipitation} mm</span>
-        `;
+    // Bygger upp strukturen för dagelementen med DOM-metoder
+    const dayNameSpan = document.createElement("span");
+    dayNameSpan.classList.add("day-name");
+    dayNameSpan.textContent = dayName;
+
+    const dateSpan = document.createElement("span");
+    dateSpan.classList.add("day-date");
+    dateSpan.textContent = dateStr;
+
+    const icon = document.createElement("i");
+    icon.className = iconClass;
+
+    const dayTemps = document.createElement("div");
+    dayTemps.classList.add("day-temps");
+
+    const tempMax = document.createElement("span");
+    tempMax.classList.add("temp-max");
+    tempMax.textContent = `${maxTemp}°`;
+
+    const tempMin = document.createElement("span");
+    tempMin.classList.add("temp-min");
+    tempMin.textContent = `${minTemp}°`;
+
+    dayTemps.appendChild(tempMax);
+    dayTemps.appendChild(tempMin);
+
+    const precipSpan = document.createElement("span");
+    precipSpan.classList.add("precip-mm");
+    precipSpan.textContent = `${precipitation} mm`;
+
+    dayElement.appendChild(dayNameSpan);
+    dayElement.appendChild(dateSpan);
+    dayElement.appendChild(icon);
+    dayElement.appendChild(dayTemps);
+    dayElement.appendChild(precipSpan);
 
     // Lägger till dagelementet i listan
     forecastList.appendChild(dayElement);
@@ -300,7 +324,7 @@ export function displayCurrentDate() {
 
 /**
  * Renderar timvis prognos - visar ALLA 24 timmar för den sökta staden
- * @author Ivana
+ * @author Ivana & Maryam
  * @param {Array} hours - Array med timdata från API (forecastday[0].hour)
  * @returns {void}
  */
@@ -342,12 +366,26 @@ export function renderHourlyForecast(hours) {
     const hourlyItem = document.createElement("div");
     hourlyItem.classList.add("hourly-item");
 
-    hourlyItem.innerHTML = `
-      <span class="hour">${hourFormatted}</span>
-      <i class="${iconClass}"></i>
-      <span class="temp">${temp}°</span>
-      <span class="precip">${precip}%</span>
-    `;
+    // Bygger upp varje timmes element med DOM-metoder
+    const hourSpan = document.createElement("span");
+    hourSpan.classList.add("hour");
+    hourSpan.textContent = hourFormatted;
+
+    const icon = document.createElement("i");
+    icon.className = iconClass;
+
+    const tempSpan = document.createElement("span");
+    tempSpan.classList.add("temp");
+    tempSpan.textContent = `${temp}°`;
+
+    const precipSpan = document.createElement("span");
+    precipSpan.classList.add("precip");
+    precipSpan.textContent = `${precip}%`;
+
+    hourlyItem.appendChild(hourSpan);
+    hourlyItem.appendChild(icon);
+    hourlyItem.appendChild(tempSpan);
+    hourlyItem.appendChild(precipSpan);
 
     hourlyContainer.appendChild(hourlyItem);
   });
